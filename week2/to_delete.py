@@ -1,110 +1,54 @@
 import tkinter as tk
-a = 10
-b = a
-a = 3
-print(b)
+import json
 
-# Create a tkinter window
+# Configuration and Data Loading
+try:
+    with open('../robot_data.json', 'r') as f:
+        data = json.load(f)
+except FileNotFoundError:
+    print("Error: robot_data.json not found.")
+    exit()  # Exit the program gracefully if the file is not found
+
+colors = data.get("colors", {}) # Handle the case where colors might not be in the json
+robot_configurations = data.get("robot_configurations", [])  # Safeguard against missing configurations
+
+# --- Tkinter Setup ---
 root = tk.Tk()
 root.title("Customizable Robots")
-
-# Prevent the window from being resizable
 root.resizable(False, False)
-
-# Create a canvas widget within the window
 canvas = tk.Canvas(root, width=1000, height=1000)
 canvas.pack()
 
-# Define colors for different parts of the robots
-wheel_color_left = "red" # string
-wheel_color_right = "green"
-sensor_color = "gold"
-light_color = "yellow"
-body_color = "blue"
+# --- Robot Drawing ---
+condition = True  # This could be made dynamic/configurable
+threshold = 500  # This could be made dynamic/configurable
+constant_val = 0  # Consider renaming this for better clarity (e.g., wheel_radius)
 
-# Define points to create the robot's shape
-## Robot 1 point properties
-robot1_points = [
-    293.9,          # numeric
-    478.4,
-    300.4, 538.1,
-    360.1, 531.6,
-    353.6, 471.9,
-]
+for i, config in enumerate(robot_configurations):
+    robot_id = i + 1
+    robot_colors = colors.get(f"robot{robot_id}", {}) # Get colors for this robot or an empty dict if not defined
 
-## Robot 2 point properties
-# robot2_points = [???????]
+    # Body Color Logic
+    body_color = robot_colors.get("body_color", "gray") if condition else "gray"
 
-robot2_points = [
-    593.9, 478.4,
-    600.4, 538.1,
-    660.1, 531.6,
-    653.6, 471.9,
-]
+    # Antenna Color Logic
+    antenna_color = "purple" if config["center_x"] >= threshold else robot_colors.get("light_color", "gray")
 
+    # Drawing the Robot
+    canvas.create_polygon(config['robot_points'], fill=body_color, tags='robot')
+    canvas.create_oval(config["center_x"], config["center_y"], config["center_x"], config["center_y"], fill=antenna_color, tags='robot') # Antenna (currently 0 size)
 
-# Define positions for various robot components
-## positions for robot 1 components
-center_x1 = 327
-center_y1 = 505
-wheel1_x1 = 330.3
-wheel1_y1 = 534.8
-wheel2_x1 = 323.7
-wheel2_y1 = 475.2
-sensor1_x1 = 354.6
-sensor1_y1 = 481.8
-sensor2_x1 = 359.0
-sensor2_y1 = 521.6
+    # Wheels, Sensors (Using robot_colors or gray if not specified)
+    canvas.create_oval(config["wheel1_x"] - constant_val, config["wheel1_y"] - constant_val, config["wheel1_x"] + constant_val, config["wheel1_y"] + constant_val, fill=robot_colors.get("wheel_color_left", "gray"), tags='robot')
+    canvas.create_oval(config["wheel2_x"] - constant_val, config["wheel2_y"] - constant_val, config["wheel2_x"] + constant_val, config["wheel2_y"] + constant_val, fill=robot_colors.get("wheel_color_right", "gray"), tags='robot')
+    canvas.create_oval(config["sensor1_x"] - constant_val, config["sensor1_y"] - constant_val, config["sensor1_x"] + constant_val, config["sensor1_y"] + constant_val, fill=robot_colors.get("sensor_color", "gray"), tags='robot')
+    canvas.create_oval(config["sensor2_x"] - constant_val, config["sensor2_y"] - constant_val, config["sensor2_x"] + constant_val, config["sensor2_y"] + constant_val, fill=robot_colors.get("sensor_color", "gray"), tags='robot')
 
-## positions for robot 2 components
-# center_x2,center_y2,wheel1_x2,wheel1_y2,wheel2_x2,wheel2_y2,sensor1_x2,sensor1_y2,sensor2_x2,sensor2_y2
-center_x2 = 627
-center_y2 = 505
-wheel1_x2 = 630.3
-wheel1_y2 = 534.8
-wheel2_x2 = 623.7
-wheel2_y2 = 475.2
-sensor1_x2 = 654.6
-sensor1_y2 = 481.8
-sensor2_x2 = 659.0
-sensor2_y2 = 521.6
-
-
-# Constants for component size
-constant_val = 3
-
-
-# Create the robots on the canvas
-
-## Robot 1
-canvas.create_polygon(robot1_points, fill=body_color, tags='robot')
-canvas.create_oval(center_x1 - 10, center_y1 - 10, center_x1 + 10, center_y1 + 10, fill=light_color, tags='robot')
-
-
-# Robot 1 wheel
-canvas.create_oval(wheel1_x1 - constant_val, wheel1_y1 - constant_val, wheel1_x1 + constant_val, wheel1_y1 + constant_val, fill=wheel_color_left, tags='robot')
-canvas.create_oval(wheel2_x1 - constant_val, wheel2_y1 - constant_val, wheel2_x1 + constant_val, wheel2_y1 + constant_val, fill=wheel_color_right, tags='robot')
+    # Label
+    canvas.create_text(config["center_x"] + 40, config["center_y"], text=config["label"], anchor=tk.W)
+    print(f'Successfully created: {config["label"]}')
 
 
 
-# Right Sensor properties
-canvas.create_oval(sensor1_x1 - constant_val, sensor1_y1 - constant_val, sensor1_x1 + constant_val, sensor1_y1 + constant_val, fill=sensor_color, tags='robot')
-canvas.create_oval(sensor2_x1 - constant_val, sensor2_y1 - constant_val, sensor2_x1 + constant_val, sensor2_y1 + constant_val, fill=sensor_color, tags='robot')
-
-
-
-## Robot 2
-# Create robot components on the canvas for robot 2
-
-canvas.create_polygon(robot2_points, fill=body_color, tags='robot')
-canvas.create_oval(center_x2 - 8, center_y2 - 8, center_x2 + 8, center_y2 + 8, fill=light_color, tags='robot')
-
-# Create robot components on the canvas for robot 2
-canvas.create_oval(wheel1_x2 - constant_val, wheel1_y2 - constant_val, wheel1_x2 + constant_val, wheel1_y2 + constant_val, fill=wheel_color_left, tags='robot')
-canvas.create_oval(wheel2_x2 - constant_val, wheel2_y2 - constant_val, wheel2_x2 + constant_val, wheel2_y2 + constant_val, fill=wheel_color_right, tags='robot')
-canvas.create_oval(sensor1_x2 - constant_val, sensor1_y2 - constant_val, sensor1_x2 + constant_val, sensor1_y2 + constant_val, fill=sensor_color, tags='robot')
-canvas.create_oval(sensor2_x2 - constant_val, sensor2_y2 - constant_val, sensor2_x2 + constant_val, sensor2_y2 + constant_val, fill=sensor_color, tags='robot')
-
-
-# Main tkinter event loop
+# --- Tkinter Main Loop ---
 root.mainloop()

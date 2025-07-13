@@ -7,6 +7,7 @@ Imports:
 """
 
 
+
 import tkinter as tk
 import json
 
@@ -104,7 +105,7 @@ def create_robot(i, canvas, config, condition, colors, my_th):
     antenna_color = determine_antenna_color(i, colors, config, my_th)
     draw_robot(i, canvas, config, colors, body_color, antenna_color)
 
-def load_robot_data(filepath):
+def load_robot_data(filepath='../robot_data.json'):
     """
     This function loads robot data from a JSON file specified by the given file path.
 
@@ -150,14 +151,15 @@ def setup_application():
     canvas.pack()
     return root, canvas
 
-def main():
+def main(some_laluan=None):
     """
     The main function of the program. It sets up the application, loads the robot data, and initializes the robots on the canvas.
     """
     root, canvas = setup_application()
-    data = load_robot_data('../robot_data.json')
+
+    data = load_robot_data(filepath=some_laluan)
     initialize_robots(canvas, data)
     root.mainloop()
 
 if __name__ == "__main__":
-    main()
+    main(some_laluan=r'C:\Users\balan\IdeaProjects\computer_programming_gist\helper\robot_data.json')
