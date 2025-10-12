@@ -10,6 +10,8 @@ Imports:
 import tkinter as tk
 import json
 
+from helper.virtual_display import ensure_virtual_display
+
 
 def make_print_status(status_text):
     """
@@ -143,6 +145,7 @@ def setup_application():
     Returns:
         Tuple[tk.Tk, tk.Canvas]: A tuple containing the Tkinter root window and canvas objects.
     """
+    ensure_virtual_display()
     root = tk.Tk()
     root.title("Customizable Robots")
     root.resizable(False, False)

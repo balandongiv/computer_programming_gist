@@ -1,10 +1,13 @@
 import tkinter as tk
+
+from helper.virtual_display import ensure_virtual_display
 a = 10
 b = a
 a = 3
 print(b)
 
 # Create a tkinter window
+ensure_virtual_display()
 root = tk.Tk()
 root.title("Customizable Robots")
 

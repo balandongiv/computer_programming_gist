@@ -1,6 +1,8 @@
 {
   "name": "Beginner Python Class",
-  "image": "mcr.microsoft.com/devcontainers/python:3.13",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {},
     "ghcr.io/devcontainers/features/git:1": {}
