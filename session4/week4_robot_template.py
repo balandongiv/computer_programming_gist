@@ -1,5 +1,7 @@
 import tkinter as tk
 
+from helper.virtual_display import ensure_virtual_display
+
 def make_print_status( status_text):
     print(f'Succesfully create: {status_text}')
 def create_robot(i,canvas, config, condition, colors,my_th):
@@ -37,6 +39,7 @@ def create_robot(i,canvas, config, condition, colors,my_th):
     make_print_status(config["label"])
 
 def main():
+    ensure_virtual_display()
     root = tk.Tk()
     root.title("Customizable Robots")
     root.resizable(False, False)

@@ -1,6 +1,8 @@
 import random
 import tkinter as tk
 
+from helper.virtual_display import ensure_virtual_display
+
 random.seed(0)
 
 class Dirt:
@@ -24,6 +26,7 @@ def initialise_canvas(root, width=1000, height=1000):
     pass
 
 def main():
+    ensure_virtual_display()
     root = tk.Tk()
     root.title("Passive Components")
     canvas = initialise_canvas(root)

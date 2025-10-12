@@ -1,6 +1,9 @@
 import tkinter as tk
-# ket see if this works: i delete the fas and add this
+
+from helper.virtual_display import ensure_virtual_display
+
 # Create a tkinter window
+ensure_virtual_display()
 root = tk.Tk()
 root.title("Customizable Robots")
 

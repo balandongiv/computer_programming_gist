@@ -1,6 +1,8 @@
 import tkinter as tk
 import json
 
+from helper.virtual_display import ensure_virtual_display
+
 class Bot:
 
     def __init__(self,
@@ -41,6 +43,7 @@ class Bot:
 
 def setup_application():
 
+    ensure_virtual_display()
     root = tk.Tk()
     root.title("Customizable Robots")
     root.resizable(False, False)
