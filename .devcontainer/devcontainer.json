@@ -5,50 +5,40 @@
     "ghcr.io/devcontainers/features/common-utils:2": {},
     "ghcr.io/devcontainers/features/git:1": {}
   },
-  "postCreateCommand": "python -m venv .venv && . .venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt",
-  "postStartCommand": ". .venv/bin/activate && pip install -r requirements.txt",
+  "postCreateCommand": "python -m venv .venv && .venv/bin/pip install --upgrade pip setuptools wheel && if [ -f requirements.txt ]; then .venv/bin/pip install -r requirements.txt; else echo 'No requirements.txt found, skipping.'; fi",
+  "postStartCommand": "if [ -d .venv ]; then .venv/bin/pip install --upgrade pip setuptools wheel && if [ -f requirements.txt ]; then .venv/bin/pip install -r requirements.txt; fi; else echo '.venv not found; creating now...' && python -m venv .venv && .venv/bin/pip install --upgrade pip setuptools wheel && if [ -f requirements.txt ]; then .venv/bin/pip install -r requirements.txt; fi; fi",
   "customizations": {
     "vscode": {
       "extensions": [
-        // --- Core Python & Jupyter environment ---
-        "ms-python.python",                  // Main Python support (syntax, run, debug)
-        "ms-toolsai.jupyter",                // Enable Jupyter Notebook and interactive cells
-        "ms-toolsai.jupyter-keymap",         // Keyboard shortcuts for Jupyter
-        "ms-toolsai.jupyter-renderers",      // Rich notebook outputs (plots, HTML, etc.)
-        "ms-python.vscode-pylance",          // Python language server (IntelliSense)
-
-        // --- Code formatting & organization ---
-        "ms-python.black-formatter",         // Auto-format Python code
-        "ms-python.isort",                   // Organize imports automatically
-
-        // --- Debugging tools ---
-        "ms-python.debugpy",                 // Debugger backend
-        "formulahendry.code-runner",         // Quick run button for scripts
-        "donjayamanne.python-environment-manager", // Manage virtual environments
-        "visualstudioexptteam.vscodeintellicode",  // Smart code completion
-        "mhutchie.git-graph"                 // Visualize commits (for student submissions)
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "ms-toolsai.jupyter-keymap",
+        "ms-toolsai.jupyter-renderers",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "ms-python.isort",
+        "ms-python.debugpy",
+        "formulahendry.code-runner",
+        "donjayamanne.python-environment-manager",
+        "visualstudioexptteam.vscodeintellicode",
+        "mhutchie.git-graph",
+        "ms-toolsai.datawrangler"
       ],
       "settings": {
-        // --- Python environment ---
         "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
-        "python.formatting.provider": "black",
+        "python.terminal.activateEnvironment": true,
         "python.analysis.typeCheckingMode": "basic",
         "python.linting.enabled": true,
-
-        // --- Debugging ---
+        "python.formatting.provider": "black",
         "python.debugging.justMyCode": false,
         "python.debugger.showReturnValue": true,
         "debug.allowBreakpointsEverywhere": true,
         "debug.toolBarLocation": "docked",
         "debug.openDebug": "openOnSessionStart",
         "debug.showVariables": true,
-
-        // --- Jupyter Notebook variable viewer ---
         "jupyter.variableQueries.enabled": true,
         "jupyter.variableDataExplorer": true,
         "jupyter.interactiveWindowMode": "perFile",
-
-        // --- Editor preferences ---
         "editor.formatOnSave": true,
         "files.exclude": {
           "**/.ipynb_checkpoints": true,
