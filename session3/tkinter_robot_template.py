@@ -93,7 +93,7 @@ for config in robot_configurations:
     canvas.create_polygon(config['robot_points'], fill=body_color, tags='robot')
 
     # add your code here and below
-    # Refer to last week code for creating the robot components
+    # Refer to last session code for creating the robot components
 
 
 # Main tkinter event loop
