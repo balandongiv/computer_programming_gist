@@ -155,7 +155,8 @@ def main():
     The main function of the program. It sets up the application, loads the robot data, and initializes the robots on the canvas.
     """
     root, canvas = setup_application()
-    data = load_robot_data('../robot_data.json')
+    from pathlib import Path
+    data = load_robot_data(Path('helper') / 'robot_data.json')
     initialize_robots(canvas, data)
     root.mainloop()
 
