@@ -20,7 +20,7 @@ This repository is preconfigured for **GitHub Codespaces**, so students can star
 
 | Feature | Description |
 |----------|--------------|
-| 🐍 **Python 3.11** | Preinstalled base image for development |
+| 🐍 **Python 3.13** | Preinstalled base image for development |
 | 📦 **Automatic dependency install** | Installs everything from `requirements.txt` each start |
 | 🐞 **Debugger** | Step through code line-by-line and view variable values |
 | 📒 **Jupyter support** | Run and debug `.ipynb` notebooks interactively |
@@ -32,7 +32,7 @@ This repository is preconfigured for **GitHub Codespaces**, so students can star
 
 ## 🧩 Debugging Guide
 
-1. Open any `.py` file (e.g. `weeks/week01/task.py`)
+1. Open any `.py` file (e.g. `session1/task.py`)
 2. Set a **breakpoint** (click left of line numbers)
 3. Press **F5** → select *Python File*
 4. Use **Step Over (F10)** / **Step Into (F11)** to follow code execution
@@ -58,21 +58,20 @@ Ctrl+Shift+P → “Dev Containers: Rebuild Container”
 ├─ .devcontainer/
 │  └─ devcontainer.json
 ├─ requirements.txt
-├─ weeks/
-│  ├─ week01/
-│  ├─ week02/
-│  └─ week03/
+├─ session1/
+├─ session2/
+├─ session3/
 └─ README.md
 ```
 
 ---
 
 ## 🧑‍💻 Submitting Assignments
-Each week has its own folder under `weeks/`.  
+Each session has its own folder at the repository root.
 Students should:
 - Write code in `task.py` and `starter.ipynb`
 - Save outputs in `output/`
-- Commit and push changes each week
+- Commit and push changes each session
 
 ---
 

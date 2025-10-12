@@ -1,4 +1,4 @@
-# You need to transfer the WiFiHub class and the way of calling the class to the main function, into the week7_passive_component_template
+# You need to transfer the WiFiHub class and the way of calling the class to the main function, into the session7_passive_component_template
 
 class WiFiHub(Charger):
     def __init__(self, canvas, object_name, xp, yp):
